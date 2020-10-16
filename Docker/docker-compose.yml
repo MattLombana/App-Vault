@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  vault:
+    image: vault:latest
+    container_name: vault
+    hostname: vault
+    restart: unless-stopped
+    ports:
+      - "8200:8200"
+    volumes:
+      - ../Config/config.hcl:/vault/config.hcl
+      - ../Data/file:/vault/file
+      - ../Data/logs:/vault/logs
+      - ../Data/certs:/vault/certs
+    cap_add:
+      - IPC_LOCK
+    command: vault server -config=/vault/config.hcl
